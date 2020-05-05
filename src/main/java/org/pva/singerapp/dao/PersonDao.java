@@ -23,7 +23,10 @@ public class PersonDao {
 
     public List<Person> findAll() {
         return jdbcTemplate.query(
-                "SELECT ID, FIRST_NAME, LAST_NAME, BIRTH_DATE, GENDER FROM PERSONS", new PersonRowMapper());
+                "SELECT " +
+                        "ID, FIRST_NAME, LAST_NAME, BIRTH_DATE, GENDER " +
+                        "FROM PERSONS",
+                new PersonRowMapper());
     }
 
 }
