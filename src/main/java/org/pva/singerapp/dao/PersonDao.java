@@ -24,7 +24,7 @@ public class PersonDao {
     public List<Person> findAll() {
         return jdbcTemplate.query(
                 "SELECT " +
-                        "ID, FIRST_NAME, LAST_NAME, BIRTH_DATE, GENDER " +
+                        "PERSON_ID, FIRST_NAME, LAST_NAME, BIRTH_DATE, GENDER " +
                         "FROM PERSONS",
                 new PersonRowMapper());
     }
@@ -36,7 +36,7 @@ class PersonRowMapper implements RowMapper<Person> {
     @Override
     public Person mapRow(final ResultSet rs, final int rowNum) throws SQLException {
         final Person person = new Person();
-        person.setId((long) rs.getInt("ID"));
+        person.setId(rs.getString("PERSON_ID"));
         person.setFirstName(rs.getString("FIRST_NAME"));
         person.setBirthDate(rs.getDate("BIRTH_DATE"));
         person.setLastName(rs.getString("LAST_NAME"));
