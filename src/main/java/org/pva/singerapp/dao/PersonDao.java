@@ -40,7 +40,7 @@ class PersonRowMapper implements RowMapper<Person> {
         person.setFirstName(rs.getString("FIRST_NAME"));
         person.setBirthDate(rs.getDate("BIRTH_DATE"));
         person.setLastName(rs.getString("LAST_NAME"));
-        person.setGender(rs.getString("GENDER").equals("f") ? Gender.FEMALE : Gender.MALE );
+        person.setGender(rs.getString("GENDER").equalsIgnoreCase("f") ? Gender.FEMALE : Gender.MALE );
         return person;
     }
 }
