@@ -21,11 +21,6 @@ public class PersonController {
 
     @RequestMapping(path = "/persons", method = RequestMethod.GET)
     public List<Person> getAllPersons() {
-        List<Person> personList = personDao.findAll();
-        for (Person person : personList) {
-            System.out.println(person);
-        }
-        return personList;
+        return personDao.findAll();
     }
-
 }
