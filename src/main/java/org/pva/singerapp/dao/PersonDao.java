@@ -29,18 +29,18 @@ public class PersonDao {
                 new PersonRowMapper());
     }
 
-}
+    class PersonRowMapper implements RowMapper<Person> {
 
-class PersonRowMapper implements RowMapper<Person> {
-
-    @Override
-    public Person mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-        final Person person = new Person();
-        person.setId(rs.getString("PERSON_ID"));
-        person.setFirstName(rs.getString("FIRST_NAME"));
-        person.setBirthDate(rs.getDate("BIRTH_DATE"));
-        person.setLastName(rs.getString("LAST_NAME"));
-        person.setGender(rs.getString("GENDER").equalsIgnoreCase("f") ? Gender.FEMALE : Gender.MALE );
-        return person;
+        @Override
+        public Person mapRow(final ResultSet rs, final int rowNum) throws SQLException {
+            final Person person = new Person();
+            person.setId(rs.getString("PERSON_ID"));
+            person.setFirstName(rs.getString("FIRST_NAME"));
+            person.setBirthDate(rs.getDate("BIRTH_DATE"));
+            person.setLastName(rs.getString("LAST_NAME"));
+            person.setGender(rs.getString("GENDER").equalsIgnoreCase("f") ? Gender.FEMALE : Gender.MALE );
+            return person;
+        }
     }
+
 }
