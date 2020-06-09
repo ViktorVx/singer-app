@@ -4,6 +4,8 @@ import org.pva.singerapp.model.PoetryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.sql.ResultSet;
@@ -14,10 +16,16 @@ import java.util.List;
 public class PoetryDao {
 
     private JdbcTemplate jdbcTemplate;
+    private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+    }
+
+    @Autowired
+    public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     public List<PoetryEntity> findAll() {
@@ -26,6 +34,13 @@ public class PoetryDao {
                         "POETRY_ID, CREATION_DATE, POEM_NAME, AUTHOR, POEM_TEXT, USER_OWNER_ID, IS_PUBLIC " +
                         "FROM POETRY",
                 new PoetryRowMapper());
+    }
+
+    public PoetryEntity findById(String id) {
+        return namedParameterJdbcTemplate.queryForObject("SELECT " +
+                        "POETRY_ID, CREATION_DATE, POEM_NAME, AUTHOR, POEM_TEXT, USER_OWNER_ID, IS_PUBLIC " +
+                        "FROM POETRY WHERE POETRY_ID = CAST(:POETRY_ID AS uuid)",
+                new MapSqlParameterSource("POETRY_ID", id), new PoetryRowMapper());
     }
 
     class PoetryRowMapper implements RowMapper<PoetryEntity> {
