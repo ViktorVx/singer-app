@@ -15,13 +15,7 @@ import java.util.List;
 @Repository
 public class PoetryDao {
 
-    private JdbcTemplate jdbcTemplate;
     private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
-
-    @Autowired
-    public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
-    }
 
     @Autowired
     public void setNamedParameterJdbcTemplate(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
@@ -29,7 +23,7 @@ public class PoetryDao {
     }
 
     public List<PoetryEntity> findAll() {
-        return jdbcTemplate.query(
+        return namedParameterJdbcTemplate.query(
                 "SELECT " +
                         "POETRY_ID, CREATION_DATE, POEM_NAME, AUTHOR, POEM_TEXT, USER_OWNER_ID, IS_PUBLIC " +
                         "FROM POETRY",
