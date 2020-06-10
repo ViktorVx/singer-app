@@ -3,10 +3,7 @@ package org.pva.singerapp.controller;
 import org.pva.singerapp.dao.PoetryDao;
 import org.pva.singerapp.model.PoetryEntity;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,5 +25,20 @@ public class PoetryController {
     @RequestMapping(path = "/poems/{id}", method = RequestMethod.GET)
     public PoetryEntity getPoem(@PathVariable("id") String id) {
         return poetryDao.findById(id);
+    }
+
+    @RequestMapping(path = "/poems/{id}", method = RequestMethod.DELETE)
+    public void deletePoem(@PathVariable("id") String id) {
+        poetryDao.delete(id);
+    }
+
+    @RequestMapping(path = "/poems", method = RequestMethod.POST)
+    public void insertPoem(@RequestBody PoetryEntity poetryEntity) {
+        poetryDao.insert(poetryEntity);
+    }
+
+    @RequestMapping(path = "/poems", method = RequestMethod.PATCH)
+    public void updatePoem(@RequestBody PoetryEntity poetryEntity) {
+        poetryDao.update(poetryEntity);
     }
 }
